@@ -7,11 +7,16 @@ public class DifficultySelection : MonoBehaviour
 {
     public static DifficultySelection instance;
 
-    [Header("Difficulties")]
-    public bool easyMode;
-    public bool normalMode;
-    public bool hardMode;
-    public bool insaneMode;
+    public enum Difficulties
+    {
+        none,
+        easy,
+        normal,
+        hard,
+        insane
+    };
+
+    public Difficulties difficulty;
 
     void Awake()
     {
@@ -24,7 +29,9 @@ public class DifficultySelection : MonoBehaviour
         {
             instance = this;
         }
-        #endregion
+        #endregion       
+
+        difficulty = Difficulties.none;
     }
 
     // Use this for initialization
@@ -35,22 +42,22 @@ public class DifficultySelection : MonoBehaviour
 
     public void StartEasyGame()
     {
-        easyMode = true;
+        difficulty = Difficulties.easy;
         SceneManager.LoadScene("MainScene");
     }
     public void StartNormalGame()
     {
-        normalMode = true;
+        difficulty = Difficulties.normal;
         SceneManager.LoadScene("MainScene");
     }
     public void StartHardGame()
     {
-        hardMode = true;
+        difficulty = Difficulties.hard;
         SceneManager.LoadScene("MainScene");
     }
     public void StartInsaneGame()
     {
-        insaneMode = true;
+        difficulty = Difficulties.insane;
         SceneManager.LoadScene("MainScene");
     }
 }

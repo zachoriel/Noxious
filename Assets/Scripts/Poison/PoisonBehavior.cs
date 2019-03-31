@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public struct PoisonData
-{
-    [HideInInspector]
-    public float damage;
-
-    [HideInInspector] public float time;
-}
-
 public class PoisonBehavior : MonoBehaviour
 {
     public static PoisonBehavior instance;
-    public PoisonData poison;
+
+    public float damage;
 
     void Awake()
     {
@@ -34,40 +26,35 @@ public class PoisonBehavior : MonoBehaviour
     void Start()
     {
         SetDefaultDamage();
-
-        poison.time = 0f;
 	}
-
-    void CountTime()
-    {
-        poison.time += 1f * Time.deltaTime;
-    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        CountTime();
         HurtPlayer();
 	}
 
     void HurtPlayer()
     {
-        PlayerData.instance.TakeDamage(poison.damage);
+        PlayerData.instance.TakeDamage(damage);
     }
 
     void SetDefaultDamage()
     {
-        if (DifficultySelection.instance.easyMode)
+        switch (DifficultySelection.instance.difficulty)
         {
-            poison.damage = 0.5f; // If easy difficulty
-        }
-        else if (DifficultySelection.instance.normalMode || DifficultySelection.instance.hardMode)
-        {
-            poison.damage = 1f; // If normal or hard difficulty
-        }
-        else if (DifficultySelection.instance.insaneMode)
-        {
-            poison.damage = 2f; // If insane difficulty
+            case DifficultySelection.Difficulties.easy:
+                damage = 0.5f;
+                break;
+            case DifficultySelection.Difficulties.normal:
+                damage = 1f;
+                break;
+            case DifficultySelection.Difficulties.hard:
+                damage = 1f;
+                break;
+            case DifficultySelection.Difficulties.insane:
+                damage = 2f;
+                break;
         }
     }
 }

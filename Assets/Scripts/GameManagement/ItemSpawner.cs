@@ -281,38 +281,48 @@ public class ItemSpawner : MonoBehaviour
 
     void SetChancesForItems()
     {
-        totalInjections = Random.Range(5, 20);
-
-        if (DifficultySelection.instance.easyMode || DifficultySelection.instance.normalMode)
+        switch (DifficultySelection.instance.difficulty)
         {
-            totalVials = 10; // If easy or normal difficulty
-        }
-        else if (DifficultySelection.instance.hardMode || DifficultySelection.instance.insaneMode)
-        {
-            totalVials = 20; // If hard or insane difficulty
-        }
-
-        int chanceForMultipleGasMasks = Random.Range(1, 10);
-        if (chanceForMultipleGasMasks <= 8)
-        {
-            totalGasMasks = 1;
-        }
-        else
-        {
-            totalGasMasks = 2;
+            case DifficultySelection.Difficulties.easy:
+                totalVials = 10;
+                totalInjections = Random.Range(10, 20);
+                totalGasMasks = 2;
+                break;
+            case DifficultySelection.Difficulties.normal:
+                totalVials = 10;
+                totalInjections = Random.Range(10, 20);
+                totalGasMasks = 1;
+                break;
+            case DifficultySelection.Difficulties.hard:
+                totalVials = 15;
+                totalInjections = Random.Range(10, 15);
+                totalGasMasks = 1;
+                break;
+            case DifficultySelection.Difficulties.insane:
+                totalVials = 20;
+                totalInjections = 10;
+                totalGasMasks = 1;
+                break;
         }
     }
 
     void SetEnemies()
     {
-        if (DifficultySelection.instance.hardMode)
+        switch (DifficultySelection.instance.difficulty)
         {
-            totalEnemies = Random.Range(10, 20);
-        }
-        else if (DifficultySelection.instance.insaneMode)
-        {
-            totalEnemies = Random.Range(10, 20);
-            StartCoroutine(SpawnWavesOfEnemies());
+            case DifficultySelection.Difficulties.easy:
+                totalEnemies = 0;
+                break;
+            case DifficultySelection.Difficulties.normal:
+                totalEnemies = 0;
+                break;
+            case DifficultySelection.Difficulties.hard:
+                totalEnemies = Random.Range(10, 20);
+                break;
+            case DifficultySelection.Difficulties.insane:
+                totalEnemies = Random.Range(10, 20);
+                StartCoroutine(SpawnWavesOfEnemies());
+                break;
         }
     }
 }

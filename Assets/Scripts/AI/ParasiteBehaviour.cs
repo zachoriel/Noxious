@@ -7,6 +7,16 @@ public class ParasiteBehaviour : MonoBehaviour
 {
     NavMeshAgent agent;
 
+    public enum EnemyStates
+    {
+        None,
+        UnawareOfPlayer,
+        AwareOfPlayer,
+        Dead
+    };
+
+    public EnemyStates enemyStates;
+
     [Header("AI Settings")]
     [SerializeField] float fieldOfView = 120f;
     [SerializeField] float viewDistance = 50f;
@@ -16,42 +26,53 @@ public class ParasiteBehaviour : MonoBehaviour
     [SerializeField] float wanderSpeed = 1f;
     [SerializeField] float chaseSpeed = 5f;
 
-    bool awareOfPlayer = false;
     Vector3 wanderPoint;
     float insaneModeMultiplier = 10;
 
+    bool runUpdate = false;
 
-	// Use this for initialization
-	void Start ()
+
+	IEnumerator Start ()
     {
         agent = GetComponent<NavMeshAgent>();
 
-        #region Difficulty Setting
-        if (DifficultySelection.instance.hardMode)
-        {
+        yield return new WaitForSeconds(1f);
+
+        if (DifficultySelection.instance.difficulty == DifficultySelection.Difficulties.hard)
             HardModeSettings();
-        }
-        else if (DifficultySelection.instance.insaneMode)
-        {
+        else if (DifficultySelection.instance.difficulty == DifficultySelection.Difficulties.insane)
             InsaneModeSettings();
+
+        runUpdate = true;
+    }
+
+    void FixedUpdate()
+    {
+        if (runUpdate)
+        {
+            EnemyBehavior();
         }
-        #endregion
     }
 
     void EnemyBehavior()
     {
         // If the AI can see the player...
-        if (awareOfPlayer)
+        if (enemyStates == EnemyStates.AwareOfPlayer)
         {
             // Chase the player!
             Chase();
         }
         // If the AI cannot see the player...
-        else
+        else if (enemyStates == EnemyStates.UnawareOfPlayer)
         {
             // Search for the player and wander around! 
             ScanForPlayer();
             Wander();
+        }
+        else if (enemyStates == EnemyStates.Dead)
+        {
+            runUpdate = false;
+            return;
         }
     }
 
@@ -116,8 +137,8 @@ public class ParasiteBehaviour : MonoBehaviour
         agent.speed = chaseSpeed;
         agent.SetDestination(PlayerData.instance.transform.position);
 
-        // If the player gets far enough away from the AI...
-        if (Vector3.Distance(PlayerData.instance.transform.position, transform.position) > chasingViewDistance)
+        // If the player gets far enough away from the AI and the AI isn't dead...
+        if (Vector3.Distance(PlayerData.instance.transform.position, transform.position) > chasingViewDistance && enemyStates != EnemyStates.Dead)
         {
             // The AI no longer knows where the player is and resumes wandering
             MakeUnawareOfPlayer();
@@ -129,33 +150,28 @@ public class ParasiteBehaviour : MonoBehaviour
     // Makes the AI aware of the player (who'd've thunk it?)
     public void MakeAwareOfPlayer()
     {
-        awareOfPlayer = true;
+        enemyStates = EnemyStates.AwareOfPlayer;
     }
 
-    // Makes the AI unaware of the player (see above)
+    // Makes the AI unaware of the player
     void MakeUnawareOfPlayer()
     {
-        awareOfPlayer = false;
+        enemyStates = EnemyStates.UnawareOfPlayer;
     }
-    #endregion
-	
-	void FixedUpdate ()
-    {
-        EnemyBehavior();
-    }
+    #endregion		
 
     #region Settings
     // Sets values for hard mode AI up in Start
     void HardModeSettings()
-    {        
-        awareOfPlayer = false; // AI cannot see player from the start of game
+    {
+        enemyStates = EnemyStates.UnawareOfPlayer; // AI cannot see player from the start of game
         wanderPoint = RandomWanderPoint(); // Sets a random wander point for the AI
     }
 
     // Sets values for insane mode AI up in Start
     void InsaneModeSettings()
-    {       
-        awareOfPlayer = true; // All AI can see the player from the start of game        
+    {
+        enemyStates = EnemyStates.AwareOfPlayer; // All AI can see the player from the start of game      
         wanderPoint = RandomWanderPoint(); // Sets a random wander point for the AI
 
         // Sets AI's detection parameters super high so that they basically always detect the player

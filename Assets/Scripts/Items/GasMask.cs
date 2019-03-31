@@ -5,23 +5,23 @@ using UnityEngine;
 public class GasMask : MonoBehaviour
 {
     bool update = false;
-    float time = 0;
+    float time = 0f;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            ReduceDamage();
             DisableMask();
-            Destroy(gameObject, 22f);
+            ReduceDamage();
+            Destroy(gameObject, 32f);
         }
     }
 
     void Count()
     {
-        time += 1 * Time.deltaTime;
+        time += 1f * Time.deltaTime;
 
-        if (time >= 30)
+        if (time >= 30f)
         {
             IncreaseDamage();
         }
@@ -30,29 +30,31 @@ public class GasMask : MonoBehaviour
     void ReduceDamage()
     {
         update = true;
-        PoisonBehavior.instance.poison.damage = PoisonBehavior.instance.poison.damage / 2f;
+        PoisonBehavior.instance.damage = PoisonBehavior.instance.damage / 2f;
     }
     void IncreaseDamage()
     {
         update = false;
-        PoisonBehavior.instance.poison.damage = PoisonBehavior.instance.poison.damage * 2f;
+        PoisonBehavior.instance.damage = PoisonBehavior.instance.damage * 2f;
+        time = 0f;
     }
 
     void DisableMask()
     {
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
+            collider.enabled = false;
+        }
         GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().useGravity = false;
     }
 
     // Update is called once per frame
     void Update ()
     {
-		if (!update)
-        {
-            return;
-        }
-        else
+		if (update)
         {
             Count();
         }

@@ -32,16 +32,23 @@ public class CureProgress : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        if (DifficultySelection.instance.easyMode || DifficultySelection.instance.normalMode)
+        switch (DifficultySelection.instance.difficulty)
         {
-            completionIncrement = 10f; // If easy or normal difficulty
-        }
-        else if (DifficultySelection.instance.hardMode || DifficultySelection.instance.insaneMode)
-        {
-            completionIncrement = 5f; // If hard or insane difficulty
+            case DifficultySelection.Difficulties.easy:
+                completionIncrement = 10f;
+                break;
+            case DifficultySelection.Difficulties.normal:
+                completionIncrement = 10f;
+                break;
+            case DifficultySelection.Difficulties.hard:
+                completionIncrement = 6.66666667f;
+                break;
+            case DifficultySelection.Difficulties.insane:
+                completionIncrement = 5f;
+                break;
         }
 
-        cureProgress.text = completionPercentage.ToString() + "%";
+        cureProgress.text = string.Format("{0:0}%", completionPercentage);
         cureProgress.color = Color.red;
     }
 
@@ -51,7 +58,27 @@ public class CureProgress : MonoBehaviour
 
         completionPercentage += completionIncrement;
 
-        cureProgress.text = completionPercentage.ToString() + "%";
+        cureProgress.text = string.Format("{0:0}%", completionPercentage);
+
+        if (completionPercentage >= 99f)
+        {
+            SetupWin();
+        }
+    }
+
+    void SetupWin()
+    {
+        // Find and destroy all gas masks so they don't mess with the poison damage
+        GameObject[] masks = GameObject.FindGameObjectsWithTag("GasMask"); 
+        foreach (GameObject mask in masks)
+        {
+            Destroy(mask);
+        }
+
+        // Make player immune to the poison
+        PoisonBehavior.instance.damage = 0f;
+
+        // TODO: Spawn portal to finish?
     }
 
     void Update()

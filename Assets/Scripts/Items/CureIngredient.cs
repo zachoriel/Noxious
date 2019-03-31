@@ -8,6 +8,11 @@ public class CureIngredient : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Collider[] colliders = GetComponents<Collider>();
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = false;
+            }
             CureProgress.instance.IncreaseProgress();
             Destroy(gameObject);
         }
