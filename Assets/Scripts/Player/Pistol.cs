@@ -30,13 +30,14 @@ public class Pistol : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        mesh = GetComponent<MeshRenderer>();
+        //mesh = GetComponent<MeshRenderer>();
 
         if (DifficultySelection.instance.difficulty == DifficultySelection.Difficulties.easy || 
             DifficultySelection.instance.difficulty == DifficultySelection.Difficulties.normal)
         {
-            mesh.enabled = false;
-            this.enabled = false;
+            this.gameObject.SetActive(false);
+            //mesh.enabled = false;
+            //this.enabled = false;
         }
 
         readyToFire = true;
@@ -77,7 +78,7 @@ public class Pistol : MonoBehaviour
 
         // Shoots out a raycast which searches for enemies
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, player.forward, out hit, firingDistance))
+        if (Physics.Raycast(transform.position, player.forward, out hit, Mathf.Infinity))
         {
             ParasiteBehaviour parasiteBehaviour = hit.transform.gameObject.GetComponent<ParasiteBehaviour>();
             ParasiteHealth parasiteHealth = hit.transform.gameObject.GetComponent<ParasiteHealth>();

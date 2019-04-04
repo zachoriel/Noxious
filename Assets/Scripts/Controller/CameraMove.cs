@@ -20,8 +20,8 @@ public class CameraMove : MonoBehaviour
 
     void LockCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 	
 	void Update ()

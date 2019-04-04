@@ -172,8 +172,8 @@ public class PlayerData : MonoBehaviour
     {
         ResetDifficultySelection();
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
 
         // Temporary lose 
         Debug.LogWarning("LOSING!");        // Thoughts: coughing/dying sounds play, camera does some frantic looking around (animation), 
