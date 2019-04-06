@@ -78,7 +78,8 @@ public class CureProgress : MonoBehaviour
         // Make player immune to the poison
         PoisonBehavior.instance.damage = 0f;
 
-        // TODO: Spawn portal to finish?
+        PortalBehaviour portal = GameObject.FindObjectOfType<PortalBehaviour>();
+        portal.readyToFinish = true;
     }
 
     void Update()

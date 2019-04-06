@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : MonoBehaviour, IHealth
 {
     public static PlayerData instance;
 

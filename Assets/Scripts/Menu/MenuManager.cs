@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     [Header("Menu Dependencies")]
     public Animator animator;
     public Transform difficultyPanel;
+    public GameObject instructionsPanel;
     public GameObject[] difficultyButtons;
     public int difficultySelected = 1;
 
@@ -20,6 +21,21 @@ public class MenuManager : MonoBehaviour
     {
         //Camera.main.transform.Rotate(0f, 90f, 0f, Space.World);
         animator.SetTrigger("difficulty");
+    }
+
+    public void Instructions()
+    {
+        instructionsPanel.SetActive(true);
+    }
+
+    public void Back()
+    {
+        instructionsPanel.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void Buttons(int selection)
