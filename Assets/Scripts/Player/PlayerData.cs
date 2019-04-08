@@ -57,7 +57,10 @@ public class PlayerData : MonoBehaviour, IHealth
 
         HandleUI();
 
-        Destroy(DifficultySelection.instance.gameObject, 5f);
+        if (DifficultySelection.instance != null)
+        {
+            Destroy(DifficultySelection.instance.gameObject, 5f);
+        }
     }
 
     // Updates the UI to match player's stats whenever a stat changes
@@ -78,7 +81,7 @@ public class PlayerData : MonoBehaviour, IHealth
 
     void Update()
     {
-        SoundDetection();
+        //SoundDetection();
         UseStamina();
     }
 
@@ -110,13 +113,13 @@ public class PlayerData : MonoBehaviour, IHealth
     }
 
     // For aggroing enemies if within range
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Parasite"))
-        {
-            other.GetComponent<ParasiteBehaviour>().MakeAwareOfPlayer();
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Parasite"))
+    //    {
+    //        other.GetComponent<ParasiteBehaviour>().MakeAwareOfPlayer();
+    //    }
+    //}
     #endregion
 
     #region Health Mechanics
@@ -170,16 +173,9 @@ public class PlayerData : MonoBehaviour, IHealth
     // Kills the player
     public void Die()
     {
-        ResetDifficultySelection();
-
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
-
-        // Temporary lose 
-        Debug.LogWarning("LOSING!");        // Thoughts: coughing/dying sounds play, camera does some frantic looking around (animation), 
-                                            // there's an bursting sound (Skyrim Vampire Lord), the camera zooms out, and spawns in a new
-                                            // parasite, which is supposed to be the player. Lose UI (text & buttons) then fade in, prompting 
-                                            // the player to either quit or return to the main menu.
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneFader.instance.FadeTo("LoseScene");
     }
     #endregion
 
@@ -216,6 +212,6 @@ public class PlayerData : MonoBehaviour, IHealth
 
     void ResetDifficultySelection()
     {
-        DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.none;
+        DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.normal;
     }
 }

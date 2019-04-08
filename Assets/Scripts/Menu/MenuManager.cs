@@ -2,30 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("Menu Dependencies")]
-    public Animator animator;
-    public Transform difficultyPanel;
     public GameObject instructionsPanel;
-    public GameObject[] difficultyButtons;
+    public TextMeshProUGUI difficultyText;
     public int difficultySelected = 1;
+    public Color orange;
+
 
     void Start()
     {
-        Buttons(1);
+        DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.normal;
+        difficultyText.text = "Normal";
+        difficultyText.color = Color.yellow;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            RightArrow();
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            LeftArrow();
     }
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("MainScene");
-    }
-
-    public void GotoDifficulty()
-    {
-        //Camera.main.transform.Rotate(0f, 90f, 0f, Space.World);
-        animator.SetTrigger("difficulty");
+        SceneFader.instance.FadeTo("MainScene");
     }
 
     public void Instructions()
@@ -43,47 +48,74 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void Buttons(int selection)
-    {
-        for (int i = 0; i < difficultyButtons.Length; i++)
-        {
-            if (i == selection)
-            {
-                difficultyButtons[i].SetActive(true);
-                continue;
-            }
-            difficultyButtons[i].SetActive(false);
-        }
-    }
-
     public void RightArrow()
     {
         if (difficultySelected < 3)
         {
-            difficultyButtons[difficultySelected].SetActive(false);
             difficultySelected++;
-            difficultyButtons[difficultySelected].SetActive(true);
         }
         else if (difficultySelected >= 3)
         {
-            difficultyButtons[difficultySelected].SetActive(false);
             difficultySelected = 0;
-            difficultyButtons[difficultySelected].SetActive(true);
+        }
+
+        switch(difficultySelected)
+        {
+            case 0:
+                difficultyText.text = "Easy";
+                difficultyText.color = Color.green;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.easy;
+                break;
+            case 1:
+                difficultyText.text = "Normal";
+                difficultyText.color = Color.yellow;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.normal;
+                break;
+            case 2:
+                difficultyText.text = "Hard";
+                difficultyText.color = orange;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.hard;
+                break;
+            case 3:
+                difficultyText.text = "Insane";
+                difficultyText.color = Color.red;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.insane;
+                break;
         }
     }
     public void LeftArrow()
     {
         if (difficultySelected > 0)
         {
-            difficultyButtons[difficultySelected].SetActive(false);
             difficultySelected--;
-            difficultyButtons[difficultySelected].SetActive(true);
         }
         else if (difficultySelected <= 0)
         {
-            difficultyButtons[difficultySelected].SetActive(false);
             difficultySelected = 3;
-            difficultyButtons[difficultySelected].SetActive(true);
+        }
+
+        switch (difficultySelected)
+        {
+            case 0:
+                difficultyText.text = "Easy";
+                difficultyText.color = Color.green;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.easy;
+                break;
+            case 1:
+                difficultyText.text = "Normal";
+                difficultyText.color = Color.yellow;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.normal;
+                break;
+            case 2:
+                difficultyText.text = "Hard";
+                difficultyText.color = orange;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.hard;
+                break;
+            case 3:
+                difficultyText.text = "Insane";
+                difficultyText.color = Color.red;
+                DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.insane;
+                break;
         }
     }
 }

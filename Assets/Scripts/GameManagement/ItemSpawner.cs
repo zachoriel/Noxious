@@ -9,22 +9,21 @@ public class ItemSpawner : MonoBehaviour
     List<GameObject> itemList = new List<GameObject>();
     public GameObject injection, vial, gasMask, pickupsParent;
 
-    List<GameObject> enemyList = new List<GameObject>();
-    public GameObject enemy1, enemyParent;
+    //List<GameObject> enemyList = new List<GameObject>();
+    //public GameObject enemy1, enemyParent;
 
     public GameObject playerPrefab, portalPrefab;
 
     public Vector3 center, size;
     float radius;
-    public Collider[] colliders;
     public LayerMask mask;
     public LayerMask groundMask;
-    public bool mapBelow;
+    Collider[] colliders;
+    bool mapBelow;
 
-    [Tooltip("Don't touch these, they're just visible here so that I can see how many there are in any particular session")]
-    [SerializeField] int totalInjections, totalVials, totalGasMasks, totalEnemies;
-    [SerializeField] float waveIntervalTime = 15f;
-    int enemiesThisWave;
+    int totalInjections, totalVials, totalGasMasks/*, totalEnemies*/;
+    //[SerializeField] float waveIntervalTime = 15f;
+    //int enemiesThisWave;
 
     void Awake()
     {
@@ -47,10 +46,10 @@ public class ItemSpawner : MonoBehaviour
 
         AddPrefabsToList();
         SetChancesForItems();
-        SetEnemies();
+        //SetEnemies();
 
         SpawnItems();
-        SpawnParasites();
+        //SpawnParasites();
         SpawnPlayer();
         SpawnPortal();
     }
@@ -74,13 +73,13 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    void SpawnParasites()
-    {
-        for (int enemiesNumber = 0; enemiesNumber < totalEnemies; enemiesNumber++)
-        {
-            SpawnEnemies();
-        }
-    }
+    //void SpawnParasites()
+    //{
+    //    for (int enemiesNumber = 0; enemiesNumber < totalEnemies; enemiesNumber++)
+    //    {
+    //        SpawnEnemies();
+    //    }
+    //}
     #endregion
 
     #region Spawners
@@ -219,45 +218,45 @@ public class ItemSpawner : MonoBehaviour
         GameObject GasMask = Instantiate(itemList[2], spawnPos, Quaternion.identity, pickupsParent.transform);
     }
 
-    void SpawnEnemies()
-    {
-        Vector3 spawnPos = new Vector3(0f, 0f, 0f);
-        bool canSpawnHere = false;
-        int safetyNet = 0;
+    //void SpawnEnemies()
+    //{
+    //    Vector3 spawnPos = new Vector3(0f, 0f, 0f);
+    //    bool canSpawnHere = false;
+    //    int safetyNet = 0;
 
-        while (!canSpawnHere)
-        {
-            spawnPos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
-            canSpawnHere = PreventSpawnOverlap(spawnPos);
+    //    while (!canSpawnHere)
+    //    {
+    //        spawnPos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+    //        canSpawnHere = PreventSpawnOverlap(spawnPos);
 
-            if (canSpawnHere)
-            {
-                break;
-            }
+    //        if (canSpawnHere)
+    //        {
+    //            break;
+    //        }
 
-            safetyNet++;
+    //        safetyNet++;
 
-            if (safetyNet > 100)
-            {
-                break;
-            }
-        }
+    //        if (safetyNet > 100)
+    //        {
+    //            break;
+    //        }
+    //    }
 
-        GameObject Enemy = Instantiate(enemyList[0], spawnPos, Quaternion.identity, enemyParent.transform);
-    }
+    //    GameObject Enemy = Instantiate(enemyList[0], spawnPos, Quaternion.identity, enemyParent.transform);
+    //}
 
-    IEnumerator SpawnWavesOfEnemies()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(waveIntervalTime);
-            enemiesThisWave = Random.Range(2, 5);
-            for (int enemiesNumber = 0; enemiesNumber < enemiesThisWave; enemiesNumber++)
-            {
-                SpawnEnemies();
-            }
-        }       
-    }
+    //IEnumerator SpawnWavesOfEnemies()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(waveIntervalTime);
+    //        enemiesThisWave = Random.Range(2, 5);
+    //        for (int enemiesNumber = 0; enemiesNumber < enemiesThisWave; enemiesNumber++)
+    //        {
+    //            SpawnEnemies();
+    //        }
+    //    }       
+    //}
     #endregion
 
     bool PreventSpawnOverlap(Vector3 pos)
@@ -304,7 +303,7 @@ public class ItemSpawner : MonoBehaviour
     void AddPrefabsToList()
     {
         itemList.AddMany(injection, vial, gasMask);
-        enemyList.Add(enemy1);
+        //enemyList.Add(enemy1);
     }
 
     void SetChancesForItems()
@@ -313,44 +312,44 @@ public class ItemSpawner : MonoBehaviour
         {
             case DifficultySelection.Difficulties.easy:
                 totalVials = 10;
-                totalInjections = Random.Range(10, 20);
+                totalInjections = 10;
                 totalGasMasks = 2;
                 break;
             case DifficultySelection.Difficulties.normal:
-                totalVials = 20;
-                totalInjections = Random.Range(5, 15);
+                totalVials = 15;
+                totalInjections = 5;
                 totalGasMasks = 1;
                 break;
             case DifficultySelection.Difficulties.hard:
-                totalVials = 15;
-                totalInjections = Random.Range(10, 15);
+                totalVials = 20;
+                totalInjections = 3;
                 totalGasMasks = 1;
                 break;
             case DifficultySelection.Difficulties.insane:
-                totalVials = 20;
-                totalInjections = 10;
-                totalGasMasks = 1;
+                totalVials = 25;
+                totalInjections = 3;
+                totalGasMasks = 0;
                 break;
         }
     }
 
-    void SetEnemies()
-    {
-        switch (DifficultySelection.instance.difficulty)
-        {
-            case DifficultySelection.Difficulties.easy:
-                totalEnemies = 0;
-                break;
-            case DifficultySelection.Difficulties.normal:
-                totalEnemies = 0;
-                break;
-            case DifficultySelection.Difficulties.hard:
-                totalEnemies = Random.Range(10, 20);
-                break;
-            case DifficultySelection.Difficulties.insane:
-                totalEnemies = Random.Range(10, 20);
-                StartCoroutine(SpawnWavesOfEnemies());
-                break;
-        }
-    }
+    //void SetEnemies()
+    //{
+    //    switch (DifficultySelection.instance.difficulty)
+    //    {
+    //        case DifficultySelection.Difficulties.easy:
+    //            totalEnemies = 0;
+    //            break;
+    //        case DifficultySelection.Difficulties.normal:
+    //            totalEnemies = 0;
+    //            break;
+    //        case DifficultySelection.Difficulties.hard:
+    //            totalEnemies = Random.Range(10, 20);
+    //            break;
+    //        case DifficultySelection.Difficulties.insane:
+    //            totalEnemies = Random.Range(10, 20);
+    //            StartCoroutine(SpawnWavesOfEnemies());
+    //            break;
+    //    }
+    //}
 }

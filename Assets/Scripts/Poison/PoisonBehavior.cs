@@ -8,8 +8,6 @@ public class PoisonBehavior : MonoBehaviour
 
     public float damage;
 
-    float startTime;
-
     void Awake()
     {
         #region Singleton
@@ -28,7 +26,6 @@ public class PoisonBehavior : MonoBehaviour
     void Start()
     {
         SetDefaultDamage();
-        startTime = Time.time;
     }
 	
 	// Update is called once per frame
@@ -47,7 +44,7 @@ public class PoisonBehavior : MonoBehaviour
         switch (DifficultySelection.instance.difficulty)
         {
             case DifficultySelection.Difficulties.easy:
-                damage = 0.5f;
+                damage = 1f;
                 break;
             case DifficultySelection.Difficulties.normal:
                 damage = 1f;

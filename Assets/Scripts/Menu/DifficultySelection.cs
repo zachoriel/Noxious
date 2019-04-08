@@ -30,34 +30,11 @@ public class DifficultySelection : MonoBehaviour
             instance = this;
         }
         #endregion       
-
-        difficulty = Difficulties.normal;
     }
 
     // Use this for initialization
     void Start ()
     {
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void StartEasyGame()
-    {
-        difficulty = Difficulties.easy;
-        SceneManager.LoadScene("MainScene");
-    }
-    public void StartNormalGame()
-    {
-        difficulty = Difficulties.normal;
-        SceneManager.LoadScene("MainScene");
-    }
-    public void StartHardGame()
-    {
-        difficulty = Difficulties.hard;
-        SceneManager.LoadScene("MainScene");
-    }
-    public void StartInsaneGame()
-    {
-        difficulty = Difficulties.insane;
-        SceneManager.LoadScene("MainScene");
     }
 }

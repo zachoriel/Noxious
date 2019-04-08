@@ -24,7 +24,9 @@ public class PortalBehaviour : MonoBehaviour
         {
             if (readyToFinish)
             {
-                SceneManager.LoadScene("MainMenu");
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                SceneFader.instance.FadeTo("WinScene");
             }
             else
             {

@@ -38,13 +38,13 @@ public class CureProgress : MonoBehaviour
                 completionIncrement = 10f;
                 break;
             case DifficultySelection.Difficulties.normal:
-                completionIncrement = 5f;
-                break;
-            case DifficultySelection.Difficulties.hard:
                 completionIncrement = 6.66666667f;
                 break;
-            case DifficultySelection.Difficulties.insane:
+            case DifficultySelection.Difficulties.hard:
                 completionIncrement = 5f;
+                break;
+            case DifficultySelection.Difficulties.insane:
+                completionIncrement = 4f;
                 break;
         }
 
