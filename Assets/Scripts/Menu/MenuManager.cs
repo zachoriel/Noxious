@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -15,6 +15,11 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         Buttons(1);
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("MainScene");
     }
 
     public void GotoDifficulty()

@@ -8,6 +8,8 @@ public class PoisonBehavior : MonoBehaviour
 
     public float damage;
 
+    float startTime;
+
     void Awake()
     {
         #region Singleton
@@ -19,14 +21,15 @@ public class PoisonBehavior : MonoBehaviour
         {
             instance = this;
         }
-        #endregion
+        #endregion       
     }
 
     // Use this for initialization
     void Start()
     {
         SetDefaultDamage();
-	}
+        startTime = Time.time;
+    }
 	
 	// Update is called once per frame
 	void Update ()

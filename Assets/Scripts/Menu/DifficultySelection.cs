@@ -31,7 +31,7 @@ public class DifficultySelection : MonoBehaviour
         }
         #endregion       
 
-        difficulty = Difficulties.none;
+        difficulty = Difficulties.normal;
     }
 
     // Use this for initialization

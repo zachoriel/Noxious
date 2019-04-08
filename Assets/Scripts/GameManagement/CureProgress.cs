@@ -38,7 +38,7 @@ public class CureProgress : MonoBehaviour
                 completionIncrement = 10f;
                 break;
             case DifficultySelection.Difficulties.normal:
-                completionIncrement = 10f;
+                completionIncrement = 5f;
                 break;
             case DifficultySelection.Difficulties.hard:
                 completionIncrement = 6.66666667f;

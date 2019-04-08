@@ -317,8 +317,8 @@ public class ItemSpawner : MonoBehaviour
                 totalGasMasks = 2;
                 break;
             case DifficultySelection.Difficulties.normal:
-                totalVials = 10;
-                totalInjections = Random.Range(10, 20);
+                totalVials = 20;
+                totalInjections = Random.Range(5, 15);
                 totalGasMasks = 1;
                 break;
             case DifficultySelection.Difficulties.hard:
