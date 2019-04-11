@@ -19,6 +19,7 @@ public class PortalBehaviour : MonoBehaviour
         animator = GameObject.FindGameObjectWithTag("NotReadyText").GetComponent<Animator>();
         parentTrans = GetComponentInParent<Transform>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.parent.position = new Vector3(transform.parent.position.x, 5f, transform.parent.position.z);
 	}
 
     void Update()
