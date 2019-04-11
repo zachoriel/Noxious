@@ -53,7 +53,7 @@ public class PoisonBehavior : MonoBehaviour
                 damage = 1f;
                 break;
             case DifficultySelection.Difficulties.insane:
-                damage = 2f;
+                damage = 1.5f;
                 break;
         }
     }

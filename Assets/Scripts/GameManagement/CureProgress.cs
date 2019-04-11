@@ -48,6 +48,7 @@ public class CureProgress : MonoBehaviour
                 break;
         }
 
+        completionPercentage = 0f;
         cureProgress.text = string.Format("{0:0}%", completionPercentage);
         cureProgress.color = Color.red;
     }

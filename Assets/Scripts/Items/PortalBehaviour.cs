@@ -8,6 +8,7 @@ public class PortalBehaviour : MonoBehaviour
     public Animator animator;
 
     BoxCollider collider;
+    Transform parentTrans, player;
 
     [HideInInspector] public bool readyToFinish = false;
 
@@ -16,7 +17,14 @@ public class PortalBehaviour : MonoBehaviour
     {
         collider = GetComponent<BoxCollider>();
         animator = GameObject.FindGameObjectWithTag("NotReadyText").GetComponent<Animator>();
+        parentTrans = GetComponentInParent<Transform>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
+
+    void Update()
+    {
+        parentTrans.LookAt(player);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

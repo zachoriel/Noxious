@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GasMask : MonoBehaviour
 {
+    public AudioSource audioSource;
+
     bool update = false;
     float time = 0f;
 
@@ -11,6 +13,7 @@ public class GasMask : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            audioSource.Play();
             DisableMask();
             ReduceDamage();
             Destroy(gameObject, 32f);

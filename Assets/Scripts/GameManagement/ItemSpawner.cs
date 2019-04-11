@@ -101,7 +101,7 @@ public class ItemSpawner : MonoBehaviour
 
             safetyNet++;
 
-            if (safetyNet > 100)
+            if (safetyNet > 500)
             {
                 break;
             }
@@ -284,7 +284,7 @@ public class ItemSpawner : MonoBehaviour
         }
 
         RaycastHit hit;
-        mapBelow = Physics.Raycast(pos, Vector3.down, out hit, 5f, groundMask);
+        mapBelow = Physics.Raycast(pos, Vector3.down, out hit, 20f, groundMask);
 
         if (!mapBelow)
         {
@@ -313,12 +313,12 @@ public class ItemSpawner : MonoBehaviour
             case DifficultySelection.Difficulties.easy:
                 totalVials = 10;
                 totalInjections = 10;
-                totalGasMasks = 2;
+                totalGasMasks = 0;
                 break;
             case DifficultySelection.Difficulties.normal:
                 totalVials = 15;
                 totalInjections = 5;
-                totalGasMasks = 1;
+                totalGasMasks = 0;
                 break;
             case DifficultySelection.Difficulties.hard:
                 totalVials = 20;
@@ -327,8 +327,8 @@ public class ItemSpawner : MonoBehaviour
                 break;
             case DifficultySelection.Difficulties.insane:
                 totalVials = 25;
-                totalInjections = 3;
-                totalGasMasks = 0;
+                totalInjections = 5;
+                totalGasMasks = 1;
                 break;
         }
     }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SyringeInjection : MonoBehaviour
-{   
+{
+    public AudioSource audioSource;
+
     float healthToAdd;
 
 	// Use this for initialization
@@ -16,13 +18,30 @@ public class SyringeInjection : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            audioSource.Play();
+
+            DisablePotion();
+
             AddHealth();
-            Destroy(gameObject);
+
+            Destroy(gameObject, 1f);
         }
     }
 
     void AddHealth()
     {
         PlayerData.instance.AddHealth(healthToAdd);
+    }
+
+    void DisablePotion()
+    {
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            collider.isTrigger = false;
+            collider.enabled = false;
+        }
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Rigidbody>().useGravity = false;
     }
 }

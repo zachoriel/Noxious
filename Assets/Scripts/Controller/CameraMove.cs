@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField] float mouseSensitivity;
+    public float mouseSensitivity;
     string mouseXInput = "Mouse X";
     string mouseYInput = "Mouse Y";
+    [SerializeField] bool inMenu;
 
     [SerializeField] Transform player;
 
@@ -14,9 +15,17 @@ public class CameraMove : MonoBehaviour
 
 	void Awake ()
     {
-        LockCursor();
-        xAxisClamp = 0f;
+        if (!inMenu)
+        {
+            LockCursor();
+        }
+        xAxisClamp = 0f;       
 	}
+
+    void Start()
+    {
+        mouseSensitivity = SettingsManager.instance.mouseSens;
+    }
 
     void LockCursor()
     {

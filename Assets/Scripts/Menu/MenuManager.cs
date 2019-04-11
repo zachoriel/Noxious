@@ -1,23 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("Menu Dependencies")]
     public GameObject instructionsPanel;
+    public GameObject settingsPanel;
     public TextMeshProUGUI difficultyText;
     public int difficultySelected = 1;
     public Color orange;
 
+
+    void Awake()
+    {
+        Time.timeScale = 1f;
+    }
 
     void Start()
     {
         DifficultySelection.instance.difficulty = DifficultySelection.Difficulties.normal;
         difficultyText.text = "Normal";
         difficultyText.color = Color.yellow;
+
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i].volume = SettingsManager.instance.volSetting;
+        }
     }
 
     void Update()
@@ -26,10 +38,16 @@ public class MenuManager : MonoBehaviour
             RightArrow();
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             LeftArrow();
+
+        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Tab))
+        {
+            Back();
+        }
     }
 
     public void PlayGame()
     {
+        //SceneManager.LoadScene("MainScene");
         SceneFader.instance.FadeTo("MainScene");
     }
 
@@ -38,9 +56,15 @@ public class MenuManager : MonoBehaviour
         instructionsPanel.SetActive(true);
     }
 
+    public void Settings()
+    {
+        settingsPanel.SetActive(true);
+    }
+
     public void Back()
     {
         instructionsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
     }
 
     public void QuitGame()
