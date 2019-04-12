@@ -85,32 +85,32 @@ public class PlayerData : MonoBehaviour, IHealth
         UseStamina();
     }
 
-    #region Stealth Mechanic
-    // Application of player stealth profile (see next method)
-    void SoundDetection()
-    {
-        if (GetPlayerStealthProfile() == 0)
-        {
-            detectionCollider.radius = walkingDetectionRadius;
-        }
-        else if (GetPlayerStealthProfile() == 1)
-        {
-            detectionCollider.radius = runningDetectionRadius;
-        }
-    }
+    //#region Stealth Mechanic
+    //// Application of player stealth profile (see next method)
+    //void SoundDetection()
+    //{
+    //    if (GetPlayerStealthProfile() == 0)
+    //    {
+    //        detectionCollider.radius = walkingDetectionRadius;
+    //    }
+    //    else if (GetPlayerStealthProfile() == 1)
+    //    {
+    //        detectionCollider.radius = runningDetectionRadius;
+    //    }
+    //}
 
-    // Used for stealth mechanics, determines how "loud" the player is when moving
-    int GetPlayerStealthProfile()
-    {
-        if (!running)
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-    }
+    //// Used for stealth mechanics, determines how "loud" the player is when moving
+    //int GetPlayerStealthProfile()
+    //{
+    //    if (!running)
+    //    {
+    //        return 0;
+    //    }
+    //    else
+    //    {
+    //        return 1;
+    //    }
+    //}
 
     // For aggroing enemies if within range
     //void OnTriggerEnter(Collider other)
@@ -120,7 +120,7 @@ public class PlayerData : MonoBehaviour, IHealth
     //        other.GetComponent<ParasiteBehaviour>().MakeAwareOfPlayer();
     //    }
     //}
-    #endregion
+    //#endregion
 
     #region Health Mechanics
     // Called whenever the player takes damage, passes in an 'amount' parameter for custom damage

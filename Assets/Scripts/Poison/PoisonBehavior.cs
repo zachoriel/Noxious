@@ -5,7 +5,7 @@ using UnityEngine;
 public class PoisonBehavior : MonoBehaviour
 {
     public static PoisonBehavior instance;
-
+    PlayerData player;
     public float damage;
 
     void Awake()
@@ -23,9 +23,11 @@ public class PoisonBehavior : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    IEnumerator Start()
     {
         SetDefaultDamage();
+        yield return new WaitForSeconds(0.5f);
+        player = FindObjectOfType<PlayerData>();
     }
 	
 	// Update is called once per frame
@@ -36,7 +38,8 @@ public class PoisonBehavior : MonoBehaviour
 
     void HurtPlayer()
     {
-        PlayerData.instance.TakeDamage(damage);
+        //PlayerData.instance.TakeDamage(damage);
+        player.TakeDamage(damage);
     }
 
     void SetDefaultDamage()
