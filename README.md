@@ -2,7 +2,7 @@
 
 ![InGame1](https://user-images.githubusercontent.com/31017086/60045541-f8bf3300-9679-11e9-935a-bce931b14732.png)
 
-Noxious is a small survival/maze game about trying to escape a poisonous world, by finding ingredients for a cure before it's too late. 
+Noxious is a small survival / procedural maze game about trying to escape a poisonous world, by finding ingredients for a cure before it's too late. 
 
 Game Information:
 
